@@ -12,6 +12,7 @@ class Number:
         return Number("-" if self.isneg else "+", self.magnitude)
 
     def add(self, other):
+        table = [[x * y for x in range(10)] for y in range(10)]
         if other.iszero:
             return self.copy()
         elif self.iszero:
@@ -21,7 +22,29 @@ class Number:
         elif self.isneg:
             return other.sub(self.neg())
         else:
-            pass # TODO: make it actually add.
+            a = self.magnitude
+            b = self.magnitude
+            digs_in_out = max(len(a), len(b)) + 1
+            o = " " * digs_in_out
+            c = " " * digs_in_out
+            a = "0" * (digs_in_out - len(a)) + a
+            a.reverse()
+            b = "0" * (digs_in_out - len(b)) + b
+            b.reverse()
+            for didx in range(digs_in_out):
+                da = a[didx]
+                db = b[didx]
+                do, dc = list(str(table[int(da)][int(db])))
+                o[didx] = do
+                c[didx] = dc
+            o.reverse()
+            c.reverse()
+            if c == "0" * digs_in_out:
+                return Number("+", o)
+            else:
+                c = Number("+", c)
+                o = Number("+", o)
+                return o.add(c)
 
     def sub(self, other):
         if other.iszero:
