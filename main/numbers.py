@@ -1,18 +1,38 @@
 class Number:
-    def __init__(self, sign, magnitude):
+    def __init__(self, magnitude, sign=False):
         self.magnitude = str(magnitude)
         self.iszero = self.magnitude == "0"
         self.isone = self.magnitude == "1"
-        self.isneg = sign == "-"
+        if isinstance(sign, bool):
+            self.isneg = sign
+        else:
+            self.isneg = sign == "-"
 
     def neg(self):
-        return Number("-" if not self.isneg else "+", self.magnitude)
+        return Number(self.magnitude, self.isneg) 
 
     def copy(self):
-        return Number("-" if self.isneg else "+", self.magnitude)
+        return Number(self.magnitude, self.isneg)
+
+    def gt(self, other):
+        if self.isneg and not other.isneg:
+            return False
+        elif not self.isneg and other.isneg:
+            return True
+        else:
+            if self.isneg:
+                if len(self.magnitude) > len(other.magnitude):
+                    return False
+                elif len(self.magnitude) < len(other.magnitude):
+                    return True
+                else:
+                    pass # TODO: make this work
+
+    def lt(self, other):
+        return not self.gt(other)
 
     def add(self, other):
-        table = [[x * y for x in range(10)] for y in range(10)]
+        table = [[x + y for x in range(10)] for y in range(10)]
         if other.iszero:
             return self.copy()
         elif self.iszero:
@@ -40,10 +60,10 @@ class Number:
             o.reverse()
             c.reverse()
             if c == "0" * digs_in_out:
-                return Number("+", o)
+                return Number(o)
             else:
-                c = Number("+", c)
-                o = Number("+", o)
+                c = Number(c)
+                o = Number(o)
                 return o.add(c)
 
     def sub(self, other):
