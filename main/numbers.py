@@ -14,6 +14,9 @@ class Number:
     def copy(self):
         return Number(self.magnitude, self.isneg)
 
+    def isequal(self, other):
+        return self.isneg == other.isneg and self.magnitude == other.magnitude
+
     def gt(self, other):
         if self.isneg and not other.isneg:
             return False
@@ -26,8 +29,33 @@ class Number:
                 elif len(self.magnitude) < len(other.magnitude):
                     return True
                 else:
-                    pass # TODO: make this work
-
+                    for i in range(len(self.magnitude)):
+                        selfd = self.magnitude[i]
+                        otherd = other.magnitude[i]
+                        if int(selfd) > int(otherd):
+                            return False
+                        elif int(selfd) < int(otherd):
+                            return True
+                        else:
+                            continue
+                    return False
+            else:
+                if len(self.magnitude) > len(other.magnitude):
+                    return True
+                elif len(self.magnitude) < len(other.magnitude):
+                    return False
+                else:
+                    for i in range(len(self.magnitude)):
+                        selfd = self.magnitude[i]
+                        otherd = other.magnitude[i]
+                        if int(selfd) > int(otherd):
+                            return True
+                        elif int(selfd) < int(otherd):
+                            return False
+                        else:
+                            continue
+                    return False
+                
     def lt(self, other):
         return not self.gt(other)
 
