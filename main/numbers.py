@@ -1,6 +1,6 @@
 class Number:
     def __init__(self, magnitude, sign=False):
-        self.magnitude = str(magnitude)
+        self.magnitude = str(magnitude).lstrip("0") if str(magnitude).lstrip("0") else "0"
         self.iszero = self.magnitude == "0"
         self.isone = self.magnitude == "1"
         if isinstance(sign, bool):
@@ -82,6 +82,9 @@ class Number:
             for didx in range(digs_in_out):
                 da = a[didx]
                 db = b[didx]
+                if da == "." and db == ".":
+                    o[didx] = "."
+                    c[didx] = "0"
                 do, dc = list(str(table[int(da)][int(db])))
                 o[didx] = do
                 c[didx] = dc
