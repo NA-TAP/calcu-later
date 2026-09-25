@@ -106,8 +106,8 @@ class Number:
             return self.add(other.neg())
         elif self.isneg:
             return (self.add(other)).neg()
-        else:
-            pass # TODO: make it subtract
+        elif self.isequal(other):
+            return Number("0")
 
     def mul(self, other):
         pass # TODO: Multiplication
