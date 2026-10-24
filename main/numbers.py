@@ -24,3 +24,6 @@ class Number:
     def __neg__(self):
         return Number(self.whole, self.fractional, not self.sign)
 
+    def copy(self):
+        return Number(self.whole, self.fractional, self.sign)
+
